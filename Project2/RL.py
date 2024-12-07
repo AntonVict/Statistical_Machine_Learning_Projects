@@ -59,8 +59,9 @@ def learn_Q(env, n_sims, gamma = 1, omega = 0.77, epsilon = 0.05,
     #######################################################################
             # YOUR CODE HERE
             # Compute the learning rate and update the Q-function 
-
-
+            #c=1 
+            learning_rate = 1/(episode**omega)
+            Q[state][action] = Q[state][action] + omega*(action_reward + gamma*np.max(Q[state2][:]) - Q[state][action])
 
     #######################################################################
             # Update state and episode reward
