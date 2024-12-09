@@ -42,8 +42,8 @@ def learn_Q(env, n_sims, gamma = 1, omega = 0.77, epsilon = 0.05,
         state = env.reset()
         while not done:
             #Here you cans switch between decaying exploration and constant exploration
-            explore = random.random() < epsilon 
-            #explore = random.random() < (epsilon / (1 + state_action_count[state].sum()))
+            # explore = random.random() < epsilon 
+            explore = random.random() < (epsilon / (1 + state_action_count[state].sum()))
             if state not in Q or explore:
                 # Take a random action
                 action = env.action_space.sample()
@@ -59,7 +59,6 @@ def learn_Q(env, n_sims, gamma = 1, omega = 0.77, epsilon = 0.05,
     #######################################################################
             # YOUR CODE HERE
             # Compute the learning rate and update the Q-function 
-            #c=1 
             learning_rate = 1/(episode**omega)
             Q[state][action] = Q[state][action] + omega*(action_reward + gamma*np.max(Q[state2][:]) - Q[state][action])
 
