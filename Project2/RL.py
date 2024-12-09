@@ -194,7 +194,18 @@ def learn_MC(env, n_sims, gamma = 1, epsilon = 0.05,
         # YOUR CODE HERE
             # Update avg_reward
             # Update the Q-function for each visited state/action pair. 
+        avg_reward = avg_reward + (episode_reward - avg_reward) / episode
         
+        for s, v in episode_state_action_count.items():
+            for a, N in enumerate(v):
+                if N == 0:
+                    continue
+                
+                # Remove all non-first states s.t state_action_count contains only the number of first visits
+                state_action_count[s][a] -= N - 1
+
+                # Update average rewards after visiting (s, a)
+                Q[s][a] = Q[s][a] + (episode_reward - Q[s][a])/state_action_count[s][a]
 
         
     #################################################################### 
